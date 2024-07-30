@@ -22,8 +22,8 @@ def train_cnn(CNN,dL_train,dL_test,N,L,rmsy,rmsx,num_epochs=1000,lr=0.1,BATCH_SI
  
     optimizer = optim.Adam(CNN.parameters(), lr=lr)
     iterator = (tqdm(range(num_epochs), desc="Epoch"))
-    lambda_p=0.6
-    
+    lambda_p=0.02
+
     for e in iterator:
         batch_loss=torch.zeros((1,math.ceil(N/BATCH_SIZE)))
         for i,batch in enumerate(dL_train):

@@ -82,9 +82,7 @@ class reverse_CNN(nn.Module):
         y=torch.fft.ifft(Y)
         
         return y.real    
-    
-    def coherence(self,yn,z):
-
+    def EYY(self,yn,z):
         A=(self.K.reshape(-1,))/(1-self.K.reshape(-1,))
         Yn=torch.fft.fft(yn)
         Z=torch.fft.fft(z)
@@ -92,7 +90,11 @@ class reverse_CNN(nn.Module):
         ZZ=abs(torch.mean(torch.multiply(Z,Z.conj()),axis=0))
         YZ=abs(torch.mean(torch.multiply(Yn,Z.conj()),axis=0))
         
-        Yf=(A*YYn-ZZ+2*YZ)/(A+1)
+        return (A*YYn-ZZ+2*YZ)/(A+1),YYn,ZZ
+        
+    def coherence(self,yn,z):
+        Yf,YYn,ZZ=self.EYY(yn,z)
+        
         co=(torch.divide(torch.square(abs(Yf)),torch.multiply(Yf,YYn)))
 
         return co.real.cpu().detach().numpy()
