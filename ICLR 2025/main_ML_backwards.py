@@ -34,9 +34,6 @@ dts=1/500   ##sampling frequency
 sigma=0.0##set the noise level, 0.2
 X=torch.from_numpy(np.load('Y_n/X_lab.npy'))
 Y=torch.from_numpy(np.load('Y_n/Y_lab.npy'))
-# Z=torch.Tensor(np.load('Y_z/'+"lab"+'_'+str(sigma)+".npy"))
-# CNN_forward=torch.Tensor(np.load('CNN_predictions/'+"lab"+".npy")) 
-CNN_forward=torch.Tensor(np.load('Y_z/'+"lab"+'_'+str(0.1)+".npy"))
 Z=torch.Tensor(np.load('CNN_predictions/'+"lab"+".npy")) 
 f_low=0.1*int(1/dts)
 f_high=0.13*int(1/dts)
@@ -47,17 +44,14 @@ N_val=10
 N_test=160
 X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
 X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
-X_test,Y_test,Z_test,CNN_forward_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:],CNN_forward[N_train+N_val:N_train+N_val+N_test,:]
+X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
 #%%
 ####load nonlinear_damping data
 #####load data###########
 dts=1/20000   ##sampling frequency
-sigma=1 ##set the noise level, 
+sigma=30 ##set the noise level, 
 X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_damping"+".npy"))/5000 ##divide by 5000 so the input and output are both similar magnitudes around 1
 Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_damping"+".npy")) 
-# Z=torch.Tensor(np.load('Y_z/'+"nonlinear_damping"+'_'+str(sigma)+".npy"))
-# CNN_forward=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_damping"+".npy"))
-CNN_forward=torch.Tensor(np.load('Y_z/'+"nonlinear_damping"+'_'+str(0.1)+".npy"))
 Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_damping"+".npy"))
 f_low=0.012*int(1/dts)
 f_high=0.018*int(1/dts)
@@ -67,7 +61,7 @@ N_val=10
 N_test=800
 X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
 X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
-X_test,Y_test,Z_test,CNN_forward_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:],CNN_forward[N_train+N_val:N_train+N_val+N_test,:]
+X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
 #%%
 ####load nonlinear_stiffness data
 #####load data###########
@@ -75,9 +69,6 @@ dts=1/20000   ##sampling frequency
 sigma=2.5  ##set the noise level. 0.1 or 1
 X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness"+".npy"))/5000 ##divide by 5000 so the input and output are both similar magnitudes around 1
 Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_stiffness"+".npy")) 
-# Z=torch.Tensor(np.load('Y_z/'+"nonlinear_stiffness"+'_'+str(0.1)+".npy"))
-# CNN_forward=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness"+".npy"))
-CNN_forward=torch.Tensor(np.load('Y_z/'+"nonlinear_stiffness"+'_'+str(0.1)+".npy"))
 Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness"+".npy"))
 L=X.shape[1]
 f_low=0.04*int(1/dts)
@@ -87,7 +78,27 @@ N_val=10
 N_test=800
 X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
 X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
-X_test,Y_test,Z_test,CNN_forward_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:],CNN_forward[N_train+N_val:N_train+N_val+N_test,:]
+X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
+#%%
+####load nonlinear_stiffness_2 data
+#####load data###########
+dts=1/20000   ##sampling frequency
+sigma=0.1  ##set the noise level. 0.1 or 1
+
+X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness_2"+".npy")) ##divide by 5000 so the input and output are both similar magnitudes around 1
+Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_stiffness_2"+".npy")) 
+Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness_2"+".npy"))
+
+L=X.shape[1]
+f_low=0.02*int(1/dts)
+f_high=0.04*int(1/dts)
+N_train=10
+N_val=10
+N_test=800
+X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
+X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
+X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
+
 #%%
 ####load nonlinear_stiffness_3 data
 #####load data###########
@@ -95,9 +106,6 @@ dts=1/20000   ##sampling frequency
 sigma=1  ##set the noise level. 0.1 or 1
 X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness_3"+".npy")) ##divide by 5000 so the input and output are both similar magnitudes around 1
 Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_stiffness_3"+".npy")) 
-# Z=torch.Tensor(np.load('Y_z/'+"nonlinear_stiffness_3"+'_'+str(0.1)+".npy"))
-# CNN_forward=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness_3"+".npy"))
-CNN_forward=torch.Tensor(np.load('Y_z/'+"nonlinear_stiffness_3"+'_'+str(0.1)+".npy"))
 Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness_3"+".npy"))
 L=X.shape[1]
 f_low=0.025*int(1/dts)
@@ -107,7 +115,7 @@ N_val=10
 N_test=800
 X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
 X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
-X_test,Y_test,Z_test,CNN_forward_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:],CNN_forward[N_train+N_val:N_train+N_val+N_test,:]
+X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
 ###############################################################################################################################
 ######################################Define Model#############################################################################
 ################################################################################################################################
@@ -129,7 +137,7 @@ CNN=CNN.to(device)
 
 rmsx=torch.mean(torch.square(X)).item()**0.5
 rmsy=torch.mean(torch.square(Y)).item()**0.5
-print(rmsx,rmsy)
+
 noise_level=rmsy
 
 noise_train=np.random.normal(0,1,(Y_train.shape))
@@ -177,7 +185,7 @@ dL_val=DataLoader(ds_val,shuffle=True,batch_size=N_val,pin_memory=True)
 #######################################################################################
 num_epochs=100
 
-CNN=reverse_cnn_train.train_cnn(CNN,dL_train,dL_val,N_train,L,rmsy,rmsx,num_epochs,0.01,BATCH_SIZE,device)
+CNN=reverse_cnn_train.train_cnn(CNN,dL_train,dL_val,N_train,L,rmsy,rmsx,num_epochs,0.1,BATCH_SIZE,device)
 
 #%%
 plt.plot(CNN.K.detach().cpu().T)
@@ -188,7 +196,7 @@ mse=u.evaluate(CNN,dL_val,rmsy,rmsx,device)
 
 
 print(np.mean(np.array(CNN.history)[-100:,:],axis=0))
-# plt.plot(CNN.history)
+plt.plot(CNN.history)
 #%%
 ########################################################################################
 ##################################plot time domain results##################################
@@ -285,26 +293,20 @@ f,XYf_2=psd.cross_calc_batch(Y_test.numpy(),Y_test_clean.numpy(),dts,window_leng
 
 co_2=np.divide(np.square(abs(XYf_2)),np.multiply(Xf_2,Yf_2))
 
-##Y_CNN with Y_n coherence
+
+###linear coherence
 f,Xf_3=psd.cross_calc_batch(Y_test.numpy(),Y_test.numpy(),dts,window_length=window)
-f,Yf_3=psd.cross_calc_batch(CNN_forward_test.numpy(),CNN_forward_test.numpy(),dts,window_length=window)
-f,XYf_3=psd.cross_calc_batch(Y_test.numpy(),CNN_forward_test.numpy(),dts,window_length=window)
+f,Yf_3=psd.cross_calc_batch(X_test.numpy(),X_test.numpy(),dts,window_length=window)
+f,XYf_3=psd.cross_calc_batch(Y_test.numpy(),X_test.numpy(),dts,window_length=window)
 
 co_3=np.divide(np.square(abs(XYf_3)),np.multiply(Xf_3,Yf_3))
 
-###linear coherence
+##Y_z with Y_n coherence
 f,Xf_4=psd.cross_calc_batch(Y_test.numpy(),Y_test.numpy(),dts,window_length=window)
-f,Yf_4=psd.cross_calc_batch(X_test.numpy(),X_test.numpy(),dts,window_length=window)
-f,XYf_4=psd.cross_calc_batch(Y_test.numpy(),X_test.numpy(),dts,window_length=window)
+f,Yf_4=psd.cross_calc_batch(Z_test.numpy(),Z_test.numpy(),dts,window_length=window)
+f,XYf_4=psd.cross_calc_batch(Y_test.numpy(),Z_test.numpy(),dts,window_length=window)
 
 co_4=np.divide(np.square(abs(XYf_4)),np.multiply(Xf_4,Yf_4))
-
-##Y_z with Y_n coherence
-f,Xf_6=psd.cross_calc_batch(Y_test.numpy(),Y_test.numpy(),dts,window_length=window)
-f,Yf_6=psd.cross_calc_batch(Z_test.numpy(),Z_test.numpy(),dts,window_length=window)
-f,XYf_6=psd.cross_calc_batch(Y_test.numpy(),Z_test.numpy(),dts,window_length=window)
-
-co_6=np.divide(np.square(abs(XYf_6)),np.multiply(Xf_6,Yf_6))
 ###predicted nonlinear coherence
 co_5=CNN.coherence(Y_test.to(device),Z_test.to(device))
 
@@ -318,8 +320,8 @@ co_5=CNN.coherence(Y_test.to(device),Z_test.to(device))
 
 plt.figure()
 plt.plot(co_2[:L//2],'black',label='$Co(Y,Y_{n})$')
-plt.plot((co_6)[:L//2],'b:',label='$Co(Y_{CNN},Y_{n})$',alpha=1)
-plt.plot((co_4)[:L//2],'g',label='$Co(X,Y_{n})$',alpha=1)
+plt.plot((co_4)[:L//2],'b:',label='$Co(Y_{CNN},Y_{n})$',alpha=1)
+plt.plot((co_3)[:L//2],'g',label='$Co(X,Y_{n})$',alpha=1)
 plt.plot((co_5)[:L//2],'r--',label='Prediction',alpha=1)
 plt.xlabel('$\omega$')
 # plt.xlabel('$f \ (Hz)$')
