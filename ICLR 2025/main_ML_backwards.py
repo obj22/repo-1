@@ -16,7 +16,6 @@ from tqdm import tqdm
 from CNN import utilities as u
 from torch.utils.data import Dataset, DataLoader
 from CNN import dataloader,reverse_cnn,reverse_cnn_train
-import batch
 plt.rcParams["mathtext.default"]= "regular"
 matplotlib.rcParams.update({'font.size': 22})
 plt.rcParams["font.family"] = "Times New Roman"
