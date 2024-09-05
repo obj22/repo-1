@@ -28,7 +28,7 @@ def train_cnn(CNN,dL_train,dL_test,N,L,rmsy,rmsx,num_epochs=1000,lr=0.1,BATCH_SI
     for e in iterator:
         batch_loss=torch.zeros((1,math.ceil(N/BATCH_SIZE)))
         for i,batch in enumerate(dL_train):
-       
+            
             batchY,batchX=batch[0].to(device, dtype=torch.float).reshape(-1,2,L),batch[1].to(device, dtype=torch.float).reshape(-1,L)            
             # zero the parameter gradients
             optimizer.zero_grad()
@@ -40,9 +40,11 @@ def train_cnn(CNN,dL_train,dL_test,N,L,rmsy,rmsx,num_epochs=1000,lr=0.1,BATCH_SI
             
             lossx=u.MMSELoss(Xi,targetsx)
             lossyn=u.MMSELoss(Yi,targetsy)
+            lossy=u.MMSELoss(Yi,torch.zeros_like(Yi))
                 
-     
-      
+    
+        
+            
             loss=lossx*(1-lambda_p)+lambda_p*lossyn
            
             loss.backward()

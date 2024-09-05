@@ -45,8 +45,10 @@ class reverse_CNN(nn.Module):
         self.M=L
         self.M_p=300  ###number of parameters to define K
         self.points=nn.Parameter(torch.Tensor([1]*(self.M_p+2)))  ##points representing K
+   
         self.initialise_newtork_yx()
 
+   
         
     def initialise_newtork_yx(self):
         #define batch normalisations for the different numbers of channels

@@ -31,10 +31,10 @@ print(device)
 # #######import data from lab
 l=6000  #frame length
 dts=1/500   ##sampling frequency
-sigma=0.0##set the noise level, 0.2
+sigma=0.5##set the noise level 0.05,0.2,0.5 to replicate low, moderate and high noise levels in paper
 X=torch.from_numpy(np.load('Y_n/X_lab.npy'))
 Y=torch.from_numpy(np.load('Y_n/Y_lab.npy'))
-Z=torch.Tensor(np.load('CNN_predictions/'+"lab"+".npy")) 
+Z=torch.Tensor(np.load('Y_z/'+"lab"+".npy")) 
 f_low=0.1*int(1/dts)
 f_high=0.13*int(1/dts)
 L=X.shape[1]
@@ -46,15 +46,35 @@ X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
 X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
 X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
 #%%
-####load nonlinear_damping data
+####load friction
 #####load data###########
-dts=1/20000   ##sampling frequency
-sigma=30 ##set the noise level, 
-X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_damping"+".npy"))/5000 ##divide by 5000 so the input and output are both similar magnitudes around 1
-Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_damping"+".npy")) 
-Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_damping"+".npy"))
-f_low=0.012*int(1/dts)
-f_high=0.018*int(1/dts)
+dts=1/500   ##sampling frequency
+sigma=1 ##set the noise level 1,5,10 to replicate low, moderate and high noise levels in paper 
+X=torch.Tensor(np.load('Y_n/X_'+"friction"+".npy")) ##divide by 5000 so the input and output are both similar magnitudes around 1
+Y=torch.Tensor(np.load('Y_n/Y_'+"friction"+".npy"))
+Z=torch.Tensor(np.load('Y_z/'+"friction"+".npy"))
+print(X.shape,Y.shape,Z.shape)
+f_low=0.095*int(1/dts)
+f_high=0.105*int(1/dts)
+L=X.shape[1]
+N_train=10
+N_val=10
+N_test=800
+X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
+X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
+X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
+
+#%%
+####load  saturated stiffness
+#####load data###########
+dts=1/200   ##sampling frequency
+sigma=0.1 ##set the noise level 0.1,1,3 to replicate low, moderate and high noise levels in paper  
+X=torch.Tensor(np.load('Y_n/X_'+"saturating_stiffness"+".npy"))/5000 ##divide by 5000 so the input and output are both similar magnitudes around 1
+Y=torch.Tensor(np.load('Y_n/Y_'+"saturating_stiffness"+".npy"))
+Z=torch.Tensor(np.load('Y_z/'+"saturating_stiffness"+".npy"))
+
+f_low=0.066*int(1/dts)
+f_high=0.12*int(1/dts)
 L=X.shape[1]
 N_train=10
 N_val=10
@@ -66,53 +86,16 @@ X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_t
 ####load nonlinear_stiffness data
 #####load data###########
 dts=1/20000   ##sampling frequency
-sigma=2.5  ##set the noise level. 0.1 or 1
-X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness"+".npy"))/5000 ##divide by 5000 so the input and output are both similar magnitudes around 1
+sigma=3 ##set the noise level 0.5,1,3 to replicate low, moderate and high noise levels in paper
+X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness"+".npy")) ##divide by 5000 so the input and output are both similar magnitudes around 1
 Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_stiffness"+".npy")) 
-Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness"+".npy"))
-L=X.shape[1]
-f_low=0.04*int(1/dts)
-f_high=0.06*int(1/dts)
-N_train=10
-N_val=10
-N_test=800
-X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
-X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
-X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
-#%%
-####load nonlinear_stiffness_2 data
-#####load data###########
-dts=1/20000   ##sampling frequency
-sigma=0.1  ##set the noise level. 0.1 or 1
-
-X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness_2"+".npy")) ##divide by 5000 so the input and output are both similar magnitudes around 1
-Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_stiffness_2"+".npy")) 
-Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness_2"+".npy"))
-
-L=X.shape[1]
-f_low=0.02*int(1/dts)
-f_high=0.04*int(1/dts)
-N_train=10
-N_val=10
-N_test=800
-X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
-X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
-X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
-
-#%%
-####load nonlinear_stiffness_3 data
-#####load data###########
-dts=1/20000   ##sampling frequency
-sigma=1  ##set the noise level. 0.1 or 1
-X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness_3"+".npy")) ##divide by 5000 so the input and output are both similar magnitudes around 1
-Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_stiffness_3"+".npy")) 
-Z=torch.Tensor(np.load('CNN_predictions/'+"nonlinear_stiffness_3"+".npy"))
+Z=torch.Tensor(np.load('Y_z/'+"nonlinear_stiffness"+".npy"))
 L=X.shape[1]
 f_low=0.025*int(1/dts)
 f_high=0.05*int(1/dts)
 N_train=10
 N_val=10
-N_test=800
+N_test=700
 X_train,Y_train,Z_train=X[:N_train,:],Y[:N_train,:],Z[:N_train,:]
 X_val,Y_val,Z_val=X[N_train:N_train+N_val,:],Y[N_train:N_train+N_val,:],Z[N_train:N_train+N_val,:]
 X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_train+N_val+N_test,:],Z[N_train+N_val:N_train+N_val+N_test,:]
@@ -138,28 +121,23 @@ CNN=CNN.to(device)
 rmsx=torch.mean(torch.square(X)).item()**0.5
 rmsy=torch.mean(torch.square(Y)).item()**0.5
 
-noise_level=rmsy
+
 
 noise_train=np.random.normal(0,1,(Y_train.shape))
-# noise_train=filters.butter_lowpass_filter(noise_train, 0.35*int(1/dts), int(1/dts))*noise_level  
 noise_train=filters.butter_bandpass_filter(noise_train,f_low,f_high,int(1/dts))
 noise_train=torch.tensor(noise_train)*sigma
 
 
 noise_val=np.random.normal(0,1,(Y_val.shape))
-# noise_val=filters.butter_lowpass_filter(noise_val, 0.35*int(1/dts), int(1/dts))*noise_level
 noise_val=filters.butter_bandpass_filter(noise_val,f_low,f_high,int(1/dts))
 noise_val=torch.tensor(noise_val)*sigma
 
 noise_test=np.random.normal(0,1,(Y_test.shape))
-# noise_test=filters.butter_lowpass_filter(noise_test, 0.35*int(1/dts), int(1/dts))*noise_level
 noise_test=filters.butter_bandpass_filter(noise_test,f_low,f_high,int(1/dts))
-
 noise_test=torch.tensor(noise_test)*sigma
 
 
 Y_train=Y_train+noise_train
-
 Y_val=Y_val+noise_val
 Y_test_clean=Y_test.clone()
 Y_test=Y_test+noise_test
@@ -183,12 +161,10 @@ dL_val=DataLoader(ds_val,shuffle=True,batch_size=N_val,pin_memory=True)
 ########################################################################################
 ##################################train CNN#############################################
 #######################################################################################
-num_epochs=100
+num_epochs=1000
 
-CNN=reverse_cnn_train.train_cnn(CNN,dL_train,dL_val,N_train,L,rmsy,rmsx,num_epochs,0.1,BATCH_SIZE,device)
+CNN=reverse_cnn_train.train_cnn(CNN,dL_train,dL_val,N_train,L,rmsy,rmsx,num_epochs,0.01,BATCH_SIZE,device)
 
-#%%
-plt.plot(CNN.K.detach().cpu().T)
 #%%
 ####evaluate L_x and L_y on the validation dataset
  
@@ -251,7 +227,7 @@ plt.figure(2)
 plt.plot(Yf[:L//2],'Black',label='$Y_{n}$ PSD')
 plt.plot(Zf[:L//2],'g:',label='$Y_{linear}$ PSD')
 
-plt.xlim([0,600])
+plt.xlim([500,700])
 # plt.ylim([0,140000])
 
 plt.xlabel('$\omega$')
@@ -260,7 +236,9 @@ plt.legend(loc='upper right',fontsize='15')
 
 plt.tight_layout()
 
-#%%
+#%%##############################################################################################
+#########################################Plot power spectrum densities##############################
+###################################################################################################
 Yff=torch.fft.fft(Y_test_clean)
 eee=torch.fft.fft(noise_test)
 YY=abs(torch.mean(torch.multiply(Yff,Yff.conj()),axis=0))
@@ -331,14 +309,3 @@ plt.legend(fontsize='15')
 plt.tight_layout()
 plt.ylim([-0.05,1.05])
 
-#%%
-plt.figure()
-plt.plot(co_1,'r--',label='$Co(X,\hat{X})$')
-plt.plot(co_3,'b',linestyle=':',label='$Co(Y,Y_{CNN})$',alpha=1)
-plt.plot(co_4,'g',label='$Co(Y,X)$',alpha=1)
-plt.ylim([0,1.05])
-plt.xlim(0,1000)
-plt.xlabel('$\omega$')
-plt.ylabel('$\gamma^{2}(\omega)$')
-plt.legend(fontsize='15')
-plt.tight_layout()
