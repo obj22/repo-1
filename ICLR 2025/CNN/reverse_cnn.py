@@ -90,7 +90,7 @@ class reverse_CNN(nn.Module):
         Z=torch.fft.fft(z)
         YYn=abs(torch.mean(torch.multiply(Yn,Yn.conj()),axis=0))
         ZZ=abs(torch.mean(torch.multiply(Z,Z.conj()),axis=0))
-        YZ=abs(torch.mean(torch.multiply(Yn,Z.conj()),axis=0))
+        YZ=abs(torch.mean(torch.multiply(Yn,Z.conj()),axis=0)).real
         
         return (A*YYn-ZZ+2*YZ)/(A+1),YYn,ZZ
         

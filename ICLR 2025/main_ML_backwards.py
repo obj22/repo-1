@@ -85,7 +85,7 @@ X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_t
 ####load nonlinear_stiffness data
 #####load data###########
 dts=1/20000   ##sampling frequency
-sigma=3 ##set the noise level 0.5,1,3 to replicate low, moderate and high noise levels in paper
+sigma=1 ##set the noise level 0.5,1,3 to replicate low, moderate and high noise levels in paper
 X=torch.Tensor(np.load('Y_n/X_'+"nonlinear_stiffness"+".npy")) ##divide by 5000 so the input and output are both similar magnitudes around 1
 Y=torch.Tensor(np.load('Y_n/Y_'+"nonlinear_stiffness"+".npy")) 
 Z=torch.Tensor(np.load('Y_z/'+"nonlinear_stiffness"+".npy"))
@@ -160,7 +160,7 @@ dL_val=DataLoader(ds_val,shuffle=True,batch_size=N_val,pin_memory=True)
 ########################################################################################
 ##################################train CNN#############################################
 #######################################################################################
-num_epochs=1000
+num_epochs=2000
 
 CNN=reverse_cnn_train.train_cnn(CNN,dL_train,dL_val,N_train,L,rmsy,rmsx,num_epochs,0.01,BATCH_SIZE,device)
 
@@ -171,7 +171,7 @@ mse=u.evaluate(CNN,dL_val,rmsy,rmsx,device)
 
 
 print(np.mean(np.array(CNN.history)[-100:,:],axis=0))
-plt.plot(CNN.history)
+# plt.plot(CNN.history)
 #%%
 ########################################################################################
 ##################################plot time domain results##################################
