@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Nov  8 08:53:42 2021
 
-@author: Joe
-"""
 import numpy as np
 
 def mse(x,y):

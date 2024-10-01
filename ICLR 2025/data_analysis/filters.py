@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 24 15:52:49 2024
 
-@author: jtm44
-"""
 
 import numpy as np
 from scipy.signal import butter, lfilter,chirp,iirpeak,freqs

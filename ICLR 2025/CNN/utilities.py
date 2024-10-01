@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Jan  6 11:58:55 2022
 
-@author: Joe
-"""
 import torch
 import numpy as np
 from tqdm import tqdm

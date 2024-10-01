@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 21 08:59:09 2021
 
-@author: Joe
-"""
 import numpy as np
 import scipy.signal as sig
 from scipy.fft import fft, ifft, fftfreq

@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Jan  6 12:16:46 2022
 
-@author: Joe
-"""
 import numpy as np
 import torch
 import time
