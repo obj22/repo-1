@@ -26,6 +26,11 @@ print(device)
 ######################################Import Data#############################################################################
 ################################################################################################################################
 #%%
+########Important######
+#increase \lambda until the averaged L_x increases by 0.001 above the minimum value. This is a minor error in the paper; it is 0.001 not 0.01.
+
+
+#%%
 
 # #######import data from lab
 l=6000  #frame length
@@ -67,11 +72,10 @@ X_test,Y_test,Z_test=X[N_train+N_val:N_train+N_val+N_test,:],Y[N_train+N_val:N_t
 ####load  saturated stiffness
 #####load data###########
 dts=1/200   ##sampling frequency
-sigma=0.1 ##set the noise level 0.1,1,3 to replicate low, moderate and high noise levels in paper  
+sigma=1 ##set the noise level 0.1,1,3 to replicate low, moderate and high noise levels in paper  
 X=torch.Tensor(np.load('Y_n/X_'+"saturating_stiffness"+".npy"))/5000 ##divide by 5000 so the input and output are both similar magnitudes around 1
 Y=torch.Tensor(np.load('Y_n/Y_'+"saturating_stiffness"+".npy"))
 Z=torch.Tensor(np.load('Y_z/'+"saturating_stiffness"+".npy"))
-
 f_low=0.066*int(1/dts)
 f_high=0.12*int(1/dts)
 L=X.shape[1]
@@ -160,7 +164,7 @@ dL_val=DataLoader(ds_val,shuffle=True,batch_size=N_val,pin_memory=True)
 ########################################################################################
 ##################################train CNN#############################################
 #######################################################################################
-num_epochs=2000
+num_epochs=100
 
 CNN=reverse_cnn_train.train_cnn(CNN,dL_train,dL_val,N_train,L,rmsy,rmsx,num_epochs,0.01,BATCH_SIZE,device)
 
